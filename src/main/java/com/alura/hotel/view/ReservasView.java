@@ -394,7 +394,7 @@ public class ReservasView extends JFrame {
 				 //Envia la reserva a la DB
 				 this.reservasController.guardar(reserva);
 				 
-				 RegistroHuesped registro = new RegistroHuesped();
+				 RegistroHuesped registro = new RegistroHuesped(reserva.getId());
 				 registro.setVisible(true); 
 			 }				
 			} else {

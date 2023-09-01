@@ -1,32 +1,32 @@
 package com.alura.hotel.view;
 
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTextField;
 import java.awt.Color;
-
-import com.alura.hotel.controller.NacionalidadController;
-import com.alura.hotel.modelo.Nacionalidad;
-import com.toedter.calendar.JDateChooser;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import java.awt.EventQueue;
 import java.awt.Font;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import java.awt.SystemColor;
-import java.awt.event.ActionListener;
+import java.awt.Toolkit;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
-import java.text.Format;
-import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
-import javax.swing.SwingConstants;
+
+import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
+
+import com.alura.hotel.controller.HuespedesController;
+import com.alura.hotel.controller.NacionalidadController;
+import com.alura.hotel.dao.ReservasDAO;
+import com.alura.hotel.modelo.Huespedes;
+import com.alura.hotel.modelo.Nacionalidad;
+import com.alura.hotel.modelo.Reservas;
+import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
 public class RegistroHuesped extends JFrame {
@@ -43,6 +43,8 @@ public class RegistroHuesped extends JFrame {
 	int xMouse, yMouse;
 	
 	private NacionalidadController nacionalidadController;
+	private HuespedesController huespedController;
+	private Integer id_reserva;
 
 	/**
 	 * Launch the application.
@@ -51,7 +53,7 @@ public class RegistroHuesped extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					RegistroHuesped frame = new RegistroHuesped();
+					RegistroHuesped frame = new RegistroHuesped(0);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,9 +65,11 @@ public class RegistroHuesped extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public RegistroHuesped() {
+	public RegistroHuesped(Integer id_reserva) {
 		
 		this.nacionalidadController = new NacionalidadController();
+		this.huespedController = new HuespedesController();
+		this.id_reserva = id_reserva;
 		
 		setIconImage(Toolkit.getDefaultToolkit().getImage(RegistroHuesped.class.getResource("/imagenes/lOGO-50PX.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -220,8 +224,10 @@ public class RegistroHuesped extends JFrame {
 		txtNreserva.setFont(new Font("Roboto", Font.PLAIN, 16));
 		txtNreserva.setBounds(560, 495, 285, 33);
 		txtNreserva.setColumns(10);
+		txtNreserva.setEditable(false);
 		txtNreserva.setBackground(Color.WHITE);
 		txtNreserva.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+		txtNreserva.setText(this.id_reserva.toString());
 		contentPane.add(txtNreserva);
 		
 		JSeparator separator_1_2 = new JSeparator();
@@ -265,6 +271,8 @@ public class RegistroHuesped extends JFrame {
 		btnguardar.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				
+				guardar();
 			}
 		});
 		btnguardar.setLayout(null);
@@ -332,12 +340,40 @@ public class RegistroHuesped extends JFrame {
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
 	        xMouse = evt.getX();
 	        yMouse = evt.getY();
-	    }
+	 }
 
-	    private void headerMouseDragged(java.awt.event.MouseEvent evt) {
+	 private void headerMouseDragged(java.awt.event.MouseEvent evt) {
 	        int x = evt.getXOnScreen();
 	        int y = evt.getYOnScreen();
 	        this.setLocation(x - xMouse, y - yMouse);
-}
-											
+	 }
+	 
+	 private boolean camposNulos() {
+		 return this.txtNombre.getText() != null && this.txtApellido.getText() != null &&
+				this.txtTelefono.getText() != null && txtNreserva.getText() != null &&
+				this.txtFechaN.getDate() != null && comboNacionalidad.getSelectedIndex() != 0;
+	 }
+	 
+	 private java.sql.Date fecha(JDateChooser fecha) { 
+		 java.sql.Date fechaSQL = new java.sql.Date(fecha.getDate().getTime());
+		 
+		 return fechaSQL;		 
+	 }
+	 
+	 private void guardar() {
+		 if(!camposNulos()) {
+			 JOptionPane.showMessageDialog(this, "Debe llenar todos los campos para continuar");
+			 return;
+		 }
+		 
+		 var huesped = new Huespedes(
+				 this.txtNombre.getText(), 
+				 this.txtApellido.getText(), 
+				 this.fecha(txtFechaN), 
+				 this.txtTelefono.getText());
+		 
+		 this.huespedController.guardar(huesped, this.comboNacionalidad.getSelectedIndex(), this.id_reserva);
+		 
+		 JOptionPane.showMessageDialog(this, "Registrado con éxito!");
+	 }									
 }

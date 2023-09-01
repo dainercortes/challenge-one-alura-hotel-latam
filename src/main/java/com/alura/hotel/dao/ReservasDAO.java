@@ -14,6 +14,7 @@ import com.alura.hotel.modelo.Reservas;
 public class ReservasDAO {
 
 	private Connection con;
+	public static Integer idGuardado;
 	
 	public ReservasDAO(Connection con) {
 		this.con = con;
@@ -41,7 +42,7 @@ public class ReservasDAO {
 					while (resultSet.next()) {
 						reserva.setId(resultSet.getInt(1));
 						
-						System.out.println(String.format("Fue insertada la reserva No: %s", reserva));
+						System.out.println(String.format("Fue insertada la reserva No: %s", reserva.getId()));
 					}
 				}
 			}		
