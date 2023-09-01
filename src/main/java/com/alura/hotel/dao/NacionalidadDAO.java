@@ -20,9 +20,7 @@ public class NacionalidadDAO {
 		List<Nacionalidad> resultado = new ArrayList<>();
 		
 		try {
-			String sql = "SELECT id, nombre FROM nacionalidad";
-			
-			System.out.println(sql);
+			String sql = "SELECT id, nombre FROM nacionalidad ORDER BY nombre";
 			
 			final PreparedStatement statement = con
 					.prepareStatement(sql);
