@@ -22,10 +22,8 @@ import javax.swing.border.EmptyBorder;
 
 import com.alura.hotel.controller.HuespedesController;
 import com.alura.hotel.controller.NacionalidadController;
-import com.alura.hotel.dao.ReservasDAO;
 import com.alura.hotel.modelo.Huespedes;
 import com.alura.hotel.modelo.Nacionalidad;
-import com.alura.hotel.modelo.Reservas;
 import com.toedter.calendar.JDateChooser;
 
 @SuppressWarnings("serial")
@@ -55,6 +53,9 @@ public class RegistroHuesped extends JFrame {
 				try {
 					RegistroHuesped frame = new RegistroHuesped(0);
 					frame.setVisible(true);
+					
+					JOptionPane.showMessageDialog(frame, "Si el cliente es antiguo presiona el boton inferior Cliente antiguo, \n"
+							+ "Si el cliente es nuevo presiona el boton Cliente nuevo");
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -264,7 +265,7 @@ public class RegistroHuesped extends JFrame {
 		separator_1_2_5.setBounds(560, 529, 289, 2);
 		separator_1_2_5.setForeground(new Color(12, 138, 199));
 		separator_1_2_5.setBackground(new Color(12, 138, 199));
-		contentPane.add(separator_1_2_5);
+		contentPane.add(separator_1_2_5);	
 		
 		JPanel btnguardar = new JPanel();
 		btnguardar.setBounds(723, 560, 122, 35);
@@ -374,6 +375,6 @@ public class RegistroHuesped extends JFrame {
 		 
 		 this.huespedController.guardar(huesped, this.comboNacionalidad.getSelectedIndex(), this.id_reserva);
 		 
-		 JOptionPane.showMessageDialog(this, "Registrado con éxito!");
+		 JOptionPane.showMessageDialog(this, "Registrado con éxito! No reserva: " + this.id_reserva);
 	 }									
 }

@@ -9,6 +9,7 @@ public class Huespedes {
 	private String apellido;
 	private Date fecha_nacimiento;
 	private Integer id_nacionalidad;
+	private String nombre_nacionalidad;
 	private String telefono;
 	private Integer id_reserva;
 	
@@ -17,6 +18,28 @@ public class Huespedes {
 		this.apellido = apellido;
 		this.fecha_nacimiento = fecha_nacimiento;
 		this.telefono = telefono;
+	}
+
+	public Huespedes(Integer id, String nombre, String apellido, Date fecha_nacimiento, Integer id_nacionalidad,
+			String telefono, Integer id_reserva) {
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.fecha_nacimiento = fecha_nacimiento;
+		this.id_nacionalidad = id_nacionalidad;
+		this.telefono = telefono;
+		this.id_reserva = id_reserva;
+	}
+
+	public Huespedes(Integer id, String nombre, String apellido, Date fecha_nacimiento, String nombre_nacionalidad, String telefono, Integer id_reserva) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.fecha_nacimiento = fecha_nacimiento;
+		this.nombre_nacionalidad = nombre_nacionalidad;
+		this.telefono = telefono;
+		this.id_reserva = id_reserva;
 	}
 
 	public Integer getId() {
@@ -59,6 +82,10 @@ public class Huespedes {
 		this.id_nacionalidad = id_nacionalidad;
 	}
 
+	public String getNombre_Nacionalidad() {
+		return nombre_nacionalidad;
+	}
+	
 	public String getTelefono() {
 		return telefono;
 	}

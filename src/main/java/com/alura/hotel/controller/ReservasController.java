@@ -28,7 +28,7 @@ public class ReservasController {
 	}
 	
 	public List<Reservas> listar() {
-		return null;
+		return reservasDao.listar();
 	}
 
 }

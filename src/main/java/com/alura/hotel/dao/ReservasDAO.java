@@ -55,6 +55,31 @@ public class ReservasDAO {
 	public List<Reservas> listar() {
 		List<Reservas> reservas = new ArrayList<>();
 		
+		try {
+			final PreparedStatement statement = con
+					.prepareStatement("SELECT * FROM reservas");
+			
+			try (statement) {
+				statement.execute();
+				
+				final ResultSet resultSet = statement.getResultSet();
+				
+				try (resultSet) {
+					while (resultSet.next()) {
+						reservas.add(new Reservas(
+								resultSet.getInt("id"), 
+								resultSet.getDate("fecha_entrada"), 
+								resultSet.getDate("fecha_salida"), 
+								resultSet.getString("forma_pago"),
+								resultSet.getFloat("valor")));
+					}
+				}
+			}
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
 		return reservas;
 	}
 	

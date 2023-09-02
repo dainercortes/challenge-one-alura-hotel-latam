@@ -3,9 +3,13 @@ package com.alura.hotel.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.alura.hotel.modelo.Huespedes;
+import com.alura.hotel.modelo.Nacionalidad;
 
 public class HuespedesDAO {
 
@@ -43,8 +47,46 @@ public class HuespedesDAO {
 					}
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
+	}
+	
+	public List<Huespedes> listar() {
+		List<Huespedes> huespedes = new ArrayList<>();
+		
+		try {
+			String sql = "SELECT h.id, h.nombre, h.apellido, h.fecha_nacimiento, n.nombre, h.telefono, h.id_reserva "
+					+ "FROM huespedes h "
+					+ "INNER JOIN nacionalidad n "
+					+ "ON h.id_nacionalidad = n.id;";
+			
+			final PreparedStatement statement = con
+					.prepareStatement(sql);
+			
+			try (statement) {
+				statement.execute();
+				
+				final ResultSet resultSet = statement.getResultSet();
+				
+				try(resultSet) {
+					while (resultSet.next()) {
+						
+						huespedes.add(new Huespedes(
+								resultSet.getInt("h.id"),
+								resultSet.getString("h.nombre"),
+								resultSet.getString("h.apellido"),
+								resultSet.getDate("h.fecha_nacimiento"),
+								resultSet.getString("n.nombre"),
+								resultSet.getString("h.telefono"),
+								resultSet.getInt("h.id_reserva")));
+					}
+				}
+			} 
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return huespedes;
 	}
 }

@@ -53,7 +53,7 @@ public class ReservasView extends JFrame {
 			public void run() {
 				try {
 					ReservasView frame = new ReservasView();
-					frame.setVisible(true);
+					frame.setVisible(true);		
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -393,6 +393,8 @@ public class ReservasView extends JFrame {
 				 
 				 //Envia la reserva a la DB
 				 this.reservasController.guardar(reserva);
+				 
+				 JOptionPane.showMessageDialog(null, "Datos guardados correctamente No reserva: " + reserva.getId());
 				 
 				 RegistroHuesped registro = new RegistroHuesped(reserva.getId());
 				 registro.setVisible(true); 

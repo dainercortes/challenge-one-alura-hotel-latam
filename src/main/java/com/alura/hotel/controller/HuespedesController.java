@@ -1,5 +1,7 @@
 package com.alura.hotel.controller;
 
+import java.util.List;
+
 import com.alura.hotel.dao.HuespedesDAO;
 import com.alura.hotel.factory.ConnectionFactory;
 import com.alura.hotel.modelo.Huespedes;
@@ -17,6 +19,10 @@ public class HuespedesController {
 		huesped.setId_nacionalidad(id_nacionalidad);
 		huesped.setId_reserva(id_reserva);
 		huespedDAO.guardar(huesped);
+	}
+	
+	public List<Huespedes> listar() {
+		return huespedDAO.listar();
 	}
 
 }
