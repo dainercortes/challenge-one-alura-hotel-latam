@@ -7,14 +7,32 @@ import java.util.List;
 import com.alura.hotel.modelo.Huespedes;
 import com.alura.hotel.modelo.Nacionalidad;
 
+/**
+ * @version 1.0
+ * @author Dainer Cortés
+ */
 public class HuespedesDAO {
 
 	private Connection con;
-	
+
+	/**
+	 * Metodo constructor
+	 * Recibe la conexion de la DB
+	 *
+	 * @param con
+	 */
 	public HuespedesDAO(Connection con) {
+
 		this.con = con;
 	}
-	
+
+	/**
+	 * Metodo para guardar los datos del huesped en la DB
+	 *
+	 * @param huesped
+	 * @param id_nacionalidad
+	 * @param id_reserva
+	 */
 	public void guardar(Huespedes huesped) {
 		try {
 			PreparedStatement statement;
@@ -47,7 +65,11 @@ public class HuespedesDAO {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
+	/**
+	 * Metodo que devuelve la lista de huespedes registrados
+	 * @return
+	 */
 	public List<Huespedes> listar() {
 		List<Huespedes> huespedes = new ArrayList<>();
 		
@@ -86,6 +108,12 @@ public class HuespedesDAO {
 		return huespedes;
 	}
 
+	/**
+	 * Metodo que devuelve la lista de huespedes buscandolos por apellido
+	 *
+	 * @param apellido
+	 * @return
+	 */
 	public List<Huespedes> listarPorApellido(String apellido) {
 		List<Huespedes> huespedes = new ArrayList<>();
 		
@@ -125,7 +153,13 @@ public class HuespedesDAO {
 		
 		return huespedes;
 	}
-	
+
+	/**
+	 * Metodo que elimina un huesped
+	 *
+	 * @param id
+	 * @return
+	 */
 	public int eliminar(Integer id) {
 		try {
 			final PreparedStatement statement = con
@@ -144,6 +178,12 @@ public class HuespedesDAO {
 		}	
 	}
 
+	/**
+	 * Metodo que elimina la reserva del huesped
+	 *
+	 * @param id_reserva
+	 * @return
+	 */
 	public int eliminarConReserva(Integer id_reserva) {
 		try {
 			final PreparedStatement statement = con
@@ -162,6 +202,18 @@ public class HuespedesDAO {
 		}	
 	}
 
+	/**
+	 * Metodo que modifica los datos del huesped
+	 *
+	 * @param id
+	 * @param nombre
+	 * @param apellido
+	 * @param fechaNacimiento
+	 * @param nacionalidad
+	 * @param telefono
+	 * @param numReserva
+	 * @return
+	 */
 	public int modificar(Integer id, String nombre, String apellido, Date fechaNacimiento, Integer nacionalidad, String telefono, Integer numReserva) {
 		try {
 			final PreparedStatement statement = con
@@ -192,6 +244,13 @@ public class HuespedesDAO {
 		}
 	}
 
+	/**
+	 * Metodo que busca si una reserva esta asociafa a un cliente
+	 *
+	 * @param id
+	 * @param id_r
+	 * @return
+	 */
 	public int buscarIdReservaHuesped(Integer id, Integer id_r) {
 		Integer id_reserva = 0;
 

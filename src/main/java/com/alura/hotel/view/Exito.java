@@ -12,6 +12,10 @@ import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import java.awt.Toolkit;
 
+/**
+ * @version 1.0
+ * @author Dainer Cortés
+ */
 @SuppressWarnings("serial")
 public class Exito extends JDialog {
 
@@ -19,7 +23,7 @@ public class Exito extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 
 	/**
-	 * Launch the application.
+	 * Lanza la aplicación.
 	 */
 	public static void main(String[] args) {
 		try {
@@ -32,7 +36,7 @@ public class Exito extends JDialog {
 	}
 
 	/**
-	 * Create the dialog.
+	 * Crea la ventana.
 	 */
 	public Exito(JFrame frame) {
 
@@ -89,6 +93,9 @@ public class Exito extends JDialog {
 		}
 	}
 
+	/**
+	 * Devuelve al usuario al menu de usuario
+	 */
 	private void abrirVentanaUsuario() {
 		MenuUsuario usuario = new MenuUsuario();
 		frameAbierto.dispose();

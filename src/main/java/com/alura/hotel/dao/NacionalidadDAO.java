@@ -9,14 +9,30 @@ import java.util.List;
 
 import com.alura.hotel.modelo.Nacionalidad;
 
+/**
+ * @version 1.0
+ * @author Dainer Cortés
+ */
 public class NacionalidadDAO {
 
 	private Connection con;
-	
+
+	/**
+	 * Metodo constructor
+	 * Recibe la conexion de la DB
+	 *
+	 * @param con
+	 */
 	public NacionalidadDAO(Connection con) {
+
 		this.con = con;
 	}
-	
+
+	/**
+	 * Metodo que devuelve la lista de nacionalidades
+	 *
+	 * @return
+	 */
 	public List<Nacionalidad> listar() {
 		List<Nacionalidad> resultado = new ArrayList<>();
 		
@@ -44,6 +60,14 @@ public class NacionalidadDAO {
 		
 		return resultado;
 	}
+
+	/**
+	 * Metodo que busca una nacionalidad por el nombre
+	 * Ejemplo: Busca Colombniano
+	 *
+	 * @param nombre
+	 * @return
+	 */
 	public int buscarPorNombre(String nombre) {
 		Integer id = 0;
 

@@ -17,6 +17,10 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * @version 1.0
+ * @author Dainer Cortés
+ */
 @SuppressWarnings("serial")
 public class MenuPrincipal extends JFrame {
 
@@ -25,7 +29,7 @@ public class MenuPrincipal extends JFrame {
 	int xMouse, yMouse;
 
 	/**
-	 * Launch the application.
+	 * Lanza la aplicación.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -41,7 +45,7 @@ public class MenuPrincipal extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Crea la ventana.
 	 */
 	public MenuPrincipal() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/imagenes/aH-40px.png")));
@@ -133,13 +137,13 @@ public class MenuPrincipal extends JFrame {
 		btnexit.add(labelExit);
 		labelExit.setHorizontalAlignment(SwingConstants.CENTER);
 		labelExit.setFont(new Font("Roboto", Font.PLAIN, 18));
-		
-		//---------- Botón Login ----------
+
 		JPanel btnLogin = new JPanel(); 
 		btnLogin.setBounds(754, 300, 83, 70);
 		btnLogin.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				//Abre la ventana de Login
 				Login login = new Login();
 				login.setVisible(true);
 				dispose();

@@ -21,11 +21,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
+/**
+ * @version 1.0
+ * @author Dainer Cortés
+ */
 public class Login extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtUsuario;
@@ -37,7 +38,7 @@ public class Login extends JFrame {
 
 	
 	/**
-	 * Launch the application.
+	 * Lanza la aplicación.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -53,7 +54,7 @@ public class Login extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Crea la ventana.
 	 */
 	public Login() {
 		
@@ -242,31 +243,35 @@ public class Login extends JFrame {
 		panel.add(header);
 		header.setLayout(null);
 	}
-	
-	private void Login() {
-		
-		String usuario = txtUsuario.getText();
-		String contrasena = String.valueOf(txtContrasena.getPassword());
-		
-		System.out.println(usuario);
-		System.out.println(contrasena);
-		
-		if(administradorController.verificar(usuario, contrasena)) {
-			MenuUsuario menu = new MenuUsuario();
-            menu.setVisible(true);
-            dispose();
-		} else {
-			JOptionPane.showMessageDialog(this, "Usuario o Contraseña no válidos");		
-		}
-	} 
+
 	 private void headerMousePressed(java.awt.event.MouseEvent evt) {
 	        xMouse = evt.getX();
 	        yMouse = evt.getY();
 	    }//GEN-LAST:event_headerMousePressed
 
-	    private void headerMouseDragged(java.awt.event.MouseEvent evt) {
+	 private void headerMouseDragged(java.awt.event.MouseEvent evt) {
 	        int x = evt.getXOnScreen();
 	        int y = evt.getYOnScreen();
 	        this.setLocation(x - xMouse, y - yMouse);
-}
+	 }
+
+	/**
+	 * Verifica que el usuario y la contraseña sean correctos
+	 */
+	private void Login() {
+
+		String usuario = txtUsuario.getText();
+		String contrasena = String.valueOf(txtContrasena.getPassword());
+
+		System.out.println(usuario);
+		System.out.println(contrasena);
+
+		if(administradorController.verificar(usuario, contrasena)) {
+			MenuUsuario menu = new MenuUsuario();
+			menu.setVisible(true);
+			dispose();
+		} else {
+			JOptionPane.showMessageDialog(this, "Usuario o Contraseña no válidos");
+		}
+	}
 }

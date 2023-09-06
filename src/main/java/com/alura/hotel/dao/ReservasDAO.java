@@ -11,15 +11,29 @@ import java.util.List;
 
 import com.alura.hotel.modelo.Reservas;
 
+/**
+ * @version 1.0
+ * @author Dainer Cortés
+ */
 public class ReservasDAO {
 
 	private Connection con;
 	public static Integer idGuardado;
-	
+
+	/**
+	 * Metodo constructor,
+	 * Llama la conexion de la DB
+	 */
 	public ReservasDAO(Connection con) {
+
 		this.con = con;
 	}
-	
+
+	/**
+	 * Metodo para guardar la reserva en la DB
+	 *
+	 * @param reserva
+	 */
 	public void guardar(Reservas reserva) {
 		try {
 			PreparedStatement statement;
@@ -51,7 +65,12 @@ public class ReservasDAO {
 			throw new RuntimeException(e);
 		}
 	}
-	
+
+	/**
+	 * Metodo que devuelve la lista de reservas
+	 *
+	 * @return
+	 */
 	public List<Reservas> listar() {
 		List<Reservas> reservas = new ArrayList<>();
 		
@@ -82,7 +101,51 @@ public class ReservasDAO {
 		
 		return reservas;
 	}
-	
+
+	/**
+	 * Metodo que devuelve la reserva buscandola por id
+	 * @param idReserva
+	 * @return
+	 */
+	public List<Reservas> listarPorId(Integer idReserva) {
+		List<Reservas> reservas = new ArrayList<>();
+
+		try {
+			final PreparedStatement statement = con
+					.prepareStatement("SELECT * FROM reservas "
+							+ "WHERE id = ?");
+
+			try(statement) {
+				statement.setInt(1, idReserva);
+				statement.execute();
+
+				final ResultSet resultSet = statement.getResultSet();
+
+				try (resultSet) {
+					while (resultSet.next()) {
+						reservas.add(new Reservas(
+								resultSet.getInt("id"),
+								resultSet.getDate("fecha_entrada"),
+								resultSet.getDate("fecha_salida"),
+								resultSet.getString("forma_pago"),
+								resultSet.getFloat("valor")));
+					}
+				}
+
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+
+		return reservas;
+	}
+
+	/**
+	 * Metod que elimina una reserva
+	 *
+	 * @param id
+	 * @return
+	 */
 	public int eliminar(Integer id) {
 		try {
 			final PreparedStatement statement = con
@@ -100,7 +163,17 @@ public class ReservasDAO {
 			throw new RuntimeException(e);
 		}	
 	}
-	
+
+	/**
+	 * Metodo que modifica los datos de la reserva
+	 *
+	 * @param id
+	 * @param fecha_entrada
+	 * @param fecha_salida
+	 * @param forma_pago
+	 * @param valor
+	 * @return
+	 */
 	public int modificar(Integer id, Date fecha_entrada, Date fecha_salida, String forma_pago, Float valor) {
 		try {
 			final PreparedStatement statement = con
@@ -127,39 +200,11 @@ public class ReservasDAO {
 		}
 	}
 
-	public List<Reservas> listarPorId(Integer idReserva) {
-		List<Reservas> reservas = new ArrayList<>();
-		
-		try {
-			final PreparedStatement statement = con
-					.prepareStatement("SELECT * FROM reservas "
-							+ "WHERE id = ?");
-			
-			try(statement) {
-				statement.setInt(1, idReserva);
-				statement.execute();
-				
-				final ResultSet resultSet = statement.getResultSet();
-				
-				try (resultSet) {
-					while (resultSet.next()) {
-						reservas.add(new Reservas(
-								resultSet.getInt("id"), 
-								resultSet.getDate("fecha_entrada"), 
-								resultSet.getDate("fecha_salida"), 
-								resultSet.getString("forma_pago"),
-								resultSet.getFloat("valor")));
-					}
-				}
-				
-			}
-		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		}
-		
-		return reservas;
-	}
-
+	/**
+	 * Metodo que verifica si existe una reserva en la DB
+	 * @param id
+	 * @return
+	 */
 	public int buscarIdReserva(Integer id) {
 		Integer id_reserva = 0;
 

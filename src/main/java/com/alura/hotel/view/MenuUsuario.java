@@ -19,6 +19,10 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
+/**
+ * @version 1.0
+ * @author Dainer Cortés
+ */
 @SuppressWarnings("serial")
 public class MenuUsuario extends JFrame {
 
@@ -28,7 +32,7 @@ public class MenuUsuario extends JFrame {
 	private JLabel labelRegistro;
 
 	/**
-	 * Launch the application.
+	 * Lanza la aplicación.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -44,7 +48,7 @@ public class MenuUsuario extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Crea la ventana.
 	 */
 	public MenuUsuario() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuUsuario.class.getResource("/imagenes/aH-40px.png")));
@@ -96,6 +100,7 @@ public class MenuUsuario extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				// Abre la ventana para registrar reservas
 				ReservasView reservas = new ReservasView();
 				reservas.setVisible(true);
 				dispose();
@@ -126,6 +131,7 @@ public class MenuUsuario extends JFrame {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				// Abre la ventana de busqueda
 				Busqueda busqueda = new Busqueda();
 				busqueda.setVisible(true);
 				dispose();

@@ -30,7 +30,10 @@ import com.alura.hotel.controller.ReservasController;
 import com.alura.hotel.modelo.Reservas;
 import com.toedter.calendar.JDateChooser;
 
-
+/**
+ * @version 1.0
+ * @author Dainer Cortés
+ */
 @SuppressWarnings("serial")
 public class ReservasView extends JFrame {
 
@@ -46,7 +49,7 @@ public class ReservasView extends JFrame {
 	private ReservasController reservasController;
 
 	/**
-	 * Launch the application.
+	 * Lanza la aplicación.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,7 +65,7 @@ public class ReservasView extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Crea la ventana.
 	 */
 	public ReservasView() {
 		super("Reserva");
@@ -341,18 +344,34 @@ public class ReservasView extends JFrame {
 	        int y = evt.getYOnScreen();
 	        this.setLocation(x - xMouse, y - yMouse);
 	 }
-	 
-	 //Atributos para las condiciones
-	 //Revisa que haya seleccionado alguna fecha
-	 private boolean fechasNulas() {
+
+
+	/**
+	 * Revisa que haya seleccionado alguna fecha
+	 * @return
+	 */
+	private boolean fechasNulas() {
 		 return dateFechaEntrada.getDate() != null && dateFechaSalida.getDate() != null;
 	 }
 	 //Revisa que la fecha de entrada coincida con la de salida
-	 private boolean fechasCoinciden() {
+
+	/**
+	 * Revisa que la fecha de salia sea posterior a la fecha de entrada
+	 * Si fecha entrada es mayor que fecha salida retorna 1
+	 * Si fecha entrada es menor que fecha salida retorna -1
+	 * Si fecha entrada es igual que fecha salida retorna 0
+	 * @return
+	 */
+	private boolean fechasCoinciden() {
 		 return dateFechaEntrada.getDate().compareTo(dateFechaSalida.getDate()) <= 0 ;
 	 }
-	 
-	 private Float calcularPrecio() {
+
+	/**
+	 * Calcular el precio de hospedaje dependiendo de los dias
+	 * precio por día $20.000 COP
+	 * @return
+	 */
+	private Float calcularPrecio() {
 		 float pagar = 0;
 		 try {
 			 if (fechasNulas()) {
@@ -366,16 +385,22 @@ public class ReservasView extends JFrame {
 		}
 		 return pagar;
 	 }
-	 
-	 private java.sql.Date fecha(JDateChooser fecha) { 
+
+	/**
+	 * Convierte la fecha a formato compatible con MySQL
+	 * @param fecha
+	 * @return
+	 */
+	private java.sql.Date fecha(JDateChooser fecha) {
 		 java.sql.Date fechaSQL = new java.sql.Date(fecha.getDate().getTime());
 		 
 		 return fechaSQL;		 
 	 }
-	 
-	 
-	 //Invoca los metodos para guarda la reserva
-	 private void guardar() {
+
+	/**
+	 * Guarda los datos de la reserva y abre el formulario para registrar el huesped
+	 */
+	private void guardar() {
 		 
 		 if (fechasNulas()) {			  
 			 if(fechasCoinciden()) {

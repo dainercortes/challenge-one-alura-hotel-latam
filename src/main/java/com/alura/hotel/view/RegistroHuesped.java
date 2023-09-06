@@ -26,6 +26,10 @@ import com.alura.hotel.modelo.Huespedes;
 import com.alura.hotel.modelo.Nacionalidad;
 import com.toedter.calendar.JDateChooser;
 
+/**
+ * @version 1.0
+ * @author Dainer Cortés
+ */
 @SuppressWarnings("serial")
 public class RegistroHuesped extends JFrame {
 
@@ -45,7 +49,7 @@ public class RegistroHuesped extends JFrame {
 	private Integer id_reserva;
 
 	/**
-	 * Launch the application.
+	 * Lanza la aplicación.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -62,7 +66,7 @@ public class RegistroHuesped extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Crea la ventana.
 	 */
 	public RegistroHuesped(Integer id_reserva) {
 		
@@ -346,20 +350,32 @@ public class RegistroHuesped extends JFrame {
 	        int y = evt.getYOnScreen();
 	        this.setLocation(x - xMouse, y - yMouse);
 	 }
-	 
-	 private boolean camposNulos() {
+
+	/**
+	 * Valida que el formulario no tenga campos nulos
+	 * @return
+	 */
+	private boolean camposNulos() {
 		 return this.txtNombre.getText() != null && this.txtApellido.getText() != null &&
 				this.txtTelefono.getText() != null && txtNreserva.getText() != null &&
 				this.txtFechaN.getDate() != null && comboNacionalidad.getSelectedIndex() != 0;
 	 }
-	 
-	 private java.sql.Date fecha(JDateChooser fecha) { 
+
+	/**
+	 * Convierte la fecha a formato compatible con MySQL
+	 * @param fecha
+	 * @return
+	 */
+	private java.sql.Date fecha(JDateChooser fecha) {
 		 java.sql.Date fechaSQL = new java.sql.Date(fecha.getDate().getTime());
 		 
 		 return fechaSQL;		 
 	 }
-	 
-	 private void guardar() {
+
+	/**
+	 * Guarda los datos del formulario
+	 */
+	private void guardar() {
 		 if(!camposNulos()) {
 			 JOptionPane.showMessageDialog(this, "Debe llenar todos los campos para continuar");
 			 return;

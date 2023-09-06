@@ -37,6 +37,9 @@ import com.alura.hotel.modelo.Huespedes;
 import com.alura.hotel.modelo.Nacionalidad;
 import com.alura.hotel.modelo.Reservas;
 
+/**
+ * @version 1.0
+ */
 @SuppressWarnings("serial")
 public class Busqueda extends JFrame {
 
@@ -58,7 +61,7 @@ public class Busqueda extends JFrame {
 	private boolean seActualizaron = false;
 	
 	/**
-	 * Launch the application.
+	 * Lanza la aplicacion.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -74,7 +77,7 @@ public class Busqueda extends JFrame {
 	}
 
 	/**
-	 * Create the frame.
+	 * Crea la ventana.
 	 */
 	public Busqueda() {
 		
@@ -349,9 +352,12 @@ public class Busqueda extends JFrame {
 	    int y = evt.getYOnScreen();
 	    this.setLocation(x - xMouse, y - yMouse);
 	 }
-	 
-	 //Lista los datos de las tablas
-	 private void tablaReservas(List<Reservas> reservas) {	
+
+	/**
+	 * Lista los datos de las tabla reservas
+	 * @param reservas
+	 */
+	private void tablaReservas(List<Reservas> reservas) {
 		 modeloReserva.setRowCount(0);
 		 
 		 reservas.forEach(reserva -> modeloReserva.addRow(
@@ -363,8 +369,12 @@ public class Busqueda extends JFrame {
 		    				reserva.getForma_pago()	    				
 		    		}));
 	 }
-	 
-	 private void tablaHuespedes(List<Huespedes> huespedes) {
+
+	/**
+	 * Lista los datos de la tabla huespedes
+	 * @param huespedes
+	 */
+	private void tablaHuespedes(List<Huespedes> huespedes) {
 		 modeloHuesped.setRowCount(0);
 		 
 		 huespedes.forEach(huesped -> modeloHuesped.addRow(
@@ -378,22 +388,30 @@ public class Busqueda extends JFrame {
 		    				huesped.getId_reserva()
 		    		}));
 	 }
-	 
-	 
-	 //Envia los datos para listar las tablas
+
+
+	/**
+	 * Envia los datos para listar las tabla reservas
+	 */
 	private void listarTablaReservas() {
 		List<Reservas> reservas = this.reservasController.listar();
 
 		tablaReservas(reservas);
 	}
 
+	/**
+	 * Envia los datos para listar la tabla huespedes
+	 */
 	private void listarTablaHuespedes() {
 		List<Huespedes> huespedes = this.huespedesController.listar();
 
 		tablaHuespedes(huespedes);
 	}
-	 
-	 private void buscarPorApellido() {
+
+	/**
+	 * Permite buscar por apellido en la tabla huespedes
+	 */
+	private void buscarPorApellido() {
 		 try {
 			 if(!txtBuscar.getText().equals("")) {
 				 List<Huespedes> huespedes = this.huespedesController.listarPorApellido(txtBuscar.getText());
@@ -414,8 +432,11 @@ public class Busqueda extends JFrame {
 			 JOptionPane.showMessageDialog(this, "Por favor solo ingrese apellidos");
 		 }		 
 	 }
-	 
-	 private void buscarPorNumeroReserva() {
+
+	/**
+	 * Permite buscar por id en la tabla reservas
+	 */
+	private void buscarPorNumeroReserva() {
 		 try {
 			 if(!txtBuscar.getText().equals("")) {
 				 List<Reservas> reservas = this.reservasController.listarPorId(Integer.valueOf(txtBuscar.getText()));
@@ -435,12 +456,22 @@ public class Busqueda extends JFrame {
 			 JOptionPane.showMessageDialog(this, "Por favor solo ingrese números de reservas");
 		 }	 
 	 }
-	 
-	 private boolean tieneFilaElgida(JTable tabla) {
+
+	/**
+	 * Verifica si selecciono alguna fila de la tabla
+	 * @param tabla
+	 * @return
+	 */
+	private boolean tieneFilaElgida(JTable tabla) {
 		 return tabla.getSelectedRowCount() == 0 || tabla.getSelectedColumnCount() == 0;
 	 }
-	 
-	 private void modificarAtributosTablaModeloReservas(JTable tabla, DefaultTableModel modelo) {
+
+	/**
+	 * Permite modificar los datos de la tabla reservas
+	 * @param tabla
+	 * @param modelo
+	 */
+	private void modificarAtributosTablaModeloReservas(JTable tabla, DefaultTableModel modelo) {
 		 var filasModeloReservas = new ReservasController();
 		 
 		 Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
@@ -459,7 +490,12 @@ public class Busqueda extends JFrame {
 		 } 
 	 }
 
-	 private void modificarAtributosTablaModeloHuespedes(JTable tabla, DefaultTableModel modelo) {
+	/**
+	 * Permite modificar los datos de la tabla huespedes
+	 * @param tabla
+	 * @param modelo
+	 */
+	private void modificarAtributosTablaModeloHuespedes(JTable tabla, DefaultTableModel modelo) {
 		 var filasModeloHuespedes = new HuespedesController();
 
 		Integer id = Integer.valueOf(modelo.getValueAt(tabla.getSelectedRow(), 0).toString());
@@ -488,7 +524,12 @@ public class Busqueda extends JFrame {
 			JOptionPane.showMessageDialog(this, "Nacionalidad no encontrada por favor vuelve a intentar");
 		}
 	}
-	 
+
+	/**
+	 * Realiza las moficaciones de las tablas
+	 * @param tabla
+	 * @param modelo
+	 */
 	 private void modificar(JTable tabla, DefaultTableModel modelo) {
 		 if(tieneFilaElgida(tabla)) {
 			 JOptionPane.showMessageDialog(this, "Por favor seleccione un item de la tabla");
@@ -511,8 +552,14 @@ public class Busqueda extends JFrame {
 
 		 }, () -> JOptionPane.showMessageDialog(this, "Por favor, elige un item"));
 	 }
-	 
-	 private void eliminar(JTable tabla, DefaultTableModel modelo, String completarMensaje) {
+
+	/**
+	 * Permite eliminar un registro
+	 * @param tabla
+	 * @param modelo
+	 * @param completarMensaje
+	 */
+	private void eliminar(JTable tabla, DefaultTableModel modelo, String completarMensaje) {
 		 if(tieneFilaElgida(tabla)) {
 			 JOptionPane.showMessageDialog(this, "Por favor seleccione un item de la tabla");
 			 return;
@@ -531,9 +578,7 @@ public class Busqueda extends JFrame {
 			 } else {
 				 filasModeloHuespedes.eliminar(id);
 			 }
-			 
-			 			 
-			 
+
 			 try {
 				 modelo.removeRow(tabla.getSelectedRow());
 			} catch (Exception e) {
