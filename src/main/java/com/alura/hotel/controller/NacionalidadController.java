@@ -18,6 +18,10 @@ public class NacionalidadController {
 	public List<Nacionalidad> listar() {
 		return this.nacionalidadDAO.listar();
 	}
+
+	public int buscarPorNombre(String nombre) { return this.nacionalidadDAO.buscarPorNombre(nombre); }
+
+
 //	public List<Nacionalidad> cargarReporte() {
 //		return this.nacionalidadDAO.listarConHuespedes();
 //	}

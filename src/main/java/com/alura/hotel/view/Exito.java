@@ -3,12 +3,8 @@ package com.alura.hotel.view;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JPanel;
+import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import javax.swing.ImageIcon;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionListener;
@@ -19,6 +15,7 @@ import java.awt.Toolkit;
 @SuppressWarnings("serial")
 public class Exito extends JDialog {
 
+	private JFrame frameAbierto;
 	private final JPanel contentPanel = new JPanel();
 
 	/**
@@ -26,7 +23,7 @@ public class Exito extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			Exito dialog = new Exito();
+			Exito dialog = new Exito(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -37,7 +34,10 @@ public class Exito extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Exito() {
+	public Exito(JFrame frame) {
+
+		frameAbierto = frame;
+
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Exito.class.getResource("/imagenes/aH-40px.png")));
 		setBounds(100, 100, 394, 226);
 		getContentPane().setLayout(new BorderLayout());
@@ -67,9 +67,7 @@ public class Exito extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						dispose();//sirve para cerrar la ventana actual
-						MenuUsuario usuario = new MenuUsuario(); 
-						usuario.setVisible(true);
+						abrirVentanaUsuario();
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -78,10 +76,24 @@ public class Exito extends JDialog {
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						abrirVentanaUsuario();
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
+				getRootPane().setDefaultButton(cancelButton);
 			}
 		}
+	}
+
+	private void abrirVentanaUsuario() {
+		MenuUsuario usuario = new MenuUsuario();
+		frameAbierto.dispose();
+		usuario.setVisible(true);
+		dispose();
 	}
 
 }

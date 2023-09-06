@@ -397,7 +397,8 @@ public class ReservasView extends JFrame {
 				 JOptionPane.showMessageDialog(null, "Datos guardados correctamente No reserva: " + reserva.getId());
 				 
 				 RegistroHuesped registro = new RegistroHuesped(reserva.getId());
-				 registro.setVisible(true); 
+				 registro.setVisible(true);
+				 dispose();
 			 }				
 			} else {
 				JOptionPane.showMessageDialog(null, "Debes llenar todos los campos.");

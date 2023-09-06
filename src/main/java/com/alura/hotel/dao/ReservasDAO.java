@@ -76,18 +76,113 @@ public class ReservasDAO {
 				}
 			}
 			
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
 		}
 		
 		return reservas;
 	}
 	
 	public int eliminar(Integer id) {
-		return 0; 
+		try {
+			final PreparedStatement statement = con
+					.prepareStatement("DELETE FROM reservas WHERE id = ?");
+			
+			try (statement) {
+				statement.setInt(1, id);
+				statement.execute();
+				
+				int updateCount = statement.getUpdateCount();
+				
+				return updateCount; 
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}	
 	}
 	
-	public int modificar(Date fecha_entrada, Date fecha_salida, String forma_pago, Float valor) {
-		return 0;
+	public int modificar(Integer id, Date fecha_entrada, Date fecha_salida, String forma_pago, Float valor) {
+		try {
+			final PreparedStatement statement = con
+					.prepareStatement("UPDATE reservas SET "
+							+ "fecha_entrada = ?, "
+							+ "fecha_salida = ?, "
+							+ "valor = ?, "
+							+ "forma_pago = ?"				
+							+ " WHERE id = ?");
+			try(statement) {
+				statement.setDate(1, fecha_entrada);
+				statement.setDate(2, fecha_salida);
+				statement.setFloat(3, valor);
+				statement.setString(4, forma_pago);			
+				statement.setInt(5, id);
+				
+				int updateCount = statement.executeUpdate();
+				
+				return updateCount;
+			}
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	public List<Reservas> listarPorId(Integer idReserva) {
+		List<Reservas> reservas = new ArrayList<>();
+		
+		try {
+			final PreparedStatement statement = con
+					.prepareStatement("SELECT * FROM reservas "
+							+ "WHERE id = ?");
+			
+			try(statement) {
+				statement.setInt(1, idReserva);
+				statement.execute();
+				
+				final ResultSet resultSet = statement.getResultSet();
+				
+				try (resultSet) {
+					while (resultSet.next()) {
+						reservas.add(new Reservas(
+								resultSet.getInt("id"), 
+								resultSet.getDate("fecha_entrada"), 
+								resultSet.getDate("fecha_salida"), 
+								resultSet.getString("forma_pago"),
+								resultSet.getFloat("valor")));
+					}
+				}
+				
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		
+		return reservas;
+	}
+
+	public int buscarIdReserva(Integer id) {
+		Integer id_reserva = 0;
+
+		try {
+			String sql = "SELECT COUNT(*) FROM reservas WHERE id = ?";
+
+			final PreparedStatement statement = con.prepareStatement(sql);
+
+			try (statement) {
+				statement.setInt(1, id);
+
+				final ResultSet resultSet = statement.executeQuery();
+
+				try (resultSet) {
+					if (resultSet.next()) {
+						id_reserva = resultSet.getInt(1);
+					}
+
+					return id_reserva;
+				}
+			}
+		}catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
 	}
 }

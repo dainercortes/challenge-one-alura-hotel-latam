@@ -1,5 +1,6 @@
 package com.alura.hotel.controller;
 
+import java.sql.Date;
 import java.util.List;
 
 import com.alura.hotel.dao.HuespedesDAO;
@@ -24,5 +25,24 @@ public class HuespedesController {
 	public List<Huespedes> listar() {
 		return huespedDAO.listar();
 	}
+	
+	public List<Huespedes> listarPorApellido(String apellido) {
+		return huespedDAO.listarPorApellido(apellido);
+	}
 
+	public int eliminar(Integer id) {
+		return huespedDAO.eliminar(id);
+	}
+
+	public int eliminarConReserva(Integer id_reserva) {
+		return huespedDAO.eliminarConReserva(id_reserva);
+	}
+
+	public int modificar(Integer id, String nombre, String apellido, Date fechaNacimiento, Integer nacionalidad, String telefono, Integer numReserva) {
+		return huespedDAO.modificar(id, nombre, apellido, fechaNacimiento, nacionalidad, telefono, numReserva);
+	}
+
+	public int buscarIdReservaHuesped(Integer id, Integer id_r) {
+		return  this.huespedDAO.buscarIdReservaHuesped(id, id_r);
+	}
 }

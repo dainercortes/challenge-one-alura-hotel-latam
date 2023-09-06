@@ -53,9 +53,7 @@ public class RegistroHuesped extends JFrame {
 				try {
 					RegistroHuesped frame = new RegistroHuesped(0);
 					frame.setVisible(true);
-					
-					JOptionPane.showMessageDialog(frame, "Si el cliente es antiguo presiona el boton inferior Cliente antiguo, \n"
-							+ "Si el cliente es nuevo presiona el boton Cliente nuevo");
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -375,6 +373,7 @@ public class RegistroHuesped extends JFrame {
 		 
 		 this.huespedController.guardar(huesped, this.comboNacionalidad.getSelectedIndex(), this.id_reserva);
 		 
-		 JOptionPane.showMessageDialog(this, "Registrado con éxito! No reserva: " + this.id_reserva);
+		 Exito exito = new Exito(this);
+		 exito.setVisible(true);
 	 }									
 }
